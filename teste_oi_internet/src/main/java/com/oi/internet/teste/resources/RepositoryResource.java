@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,6 +48,27 @@ public class RepositoryResource {
 
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> buscar(@PathVariable("id") Long id) {
+		Repository repository = repositoryService.buscar(id);
+		return ResponseEntity.status(HttpStatus.OK).body(repository);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+		repositoryService.deletar(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> atualizar(@RequestBody Repository repository, 
+			@PathVariable("id") Long id) {
+		repository.setId(id);
+		repositoryService.atualizar(repository);
+		
+		return ResponseEntity.noContent().build();
+	}
 
 	
 	@RequestMapping(value = "/owner",method = RequestMethod.GET)
@@ -54,5 +76,25 @@ public class RepositoryResource {
 		return ResponseEntity.status(HttpStatus.OK).body(repositoryService.listarOwnerTop10());
 	}
 	
-	
+	@RequestMapping(value = "/owner/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> buscarOwner(@PathVariable("id") Long id) {
+		Owner owner = repositoryService.buscarOwner(id);
+		return ResponseEntity.status(HttpStatus.OK).body(owner);
+	}
+
+	@RequestMapping(value = "/owner/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletarOwner(@PathVariable("id") Long id) {
+		repositoryService.deletarOwner(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "/owner/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> atualizarOwner(@RequestBody Owner owner, 
+			@PathVariable("id") Long id) {
+		owner.setId(id);
+		repositoryService.atualizarOwner(owner);
+		
+		return ResponseEntity.noContent().build();
+	}
+		
 }

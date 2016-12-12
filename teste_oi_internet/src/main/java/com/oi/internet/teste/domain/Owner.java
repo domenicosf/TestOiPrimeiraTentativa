@@ -1,7 +1,7 @@
 package com.oi.internet.teste.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +34,7 @@ public class Owner {
 	@JsonInclude(Include.NON_NULL)
 	private String avatar;
 	
-	@OneToOne(mappedBy="owner", fetch=FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="owner")
 	@JsonInclude(Include.NON_NULL)
 	@JsonIgnore
 	private Repository repo;

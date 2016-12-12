@@ -6,10 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -42,14 +40,8 @@ public class Repository {
 	private Integer forks;
 	
 	@JsonInclude(Include.NON_NULL)
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
-	@JoinColumn(name = "OWNER_ID")
+	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Owner owner;
-	
-	@JsonInclude(Include.NON_NULL)
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.LAZY)
-	@JoinColumn(name = "SETTINGS_ID")
-	private Settings settings;
 
 	public Long getId() {
 		return id;
@@ -121,14 +113,6 @@ public class Repository {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
-	}
-
-	public Settings getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Settings settings) {
-		this.settings = settings;
 	}
 
 }

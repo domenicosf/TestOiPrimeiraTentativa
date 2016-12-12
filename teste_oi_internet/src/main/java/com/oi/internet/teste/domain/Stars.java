@@ -1,7 +1,7 @@
 package com.oi.internet.teste.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +24,7 @@ public class Stars {
 	@JsonInclude(Include.NON_NULL)
 	private Integer max;
 	
-	@OneToOne(mappedBy="stars", fetch=FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="stars")
 	@JsonInclude(Include.NON_NULL)
 	@JsonIgnore
 	private Settings settings;
@@ -60,7 +60,5 @@ public class Stars {
 	public void setMax(Integer max) {
 		this.max = max;
 	}
-	
-	
 
 }
